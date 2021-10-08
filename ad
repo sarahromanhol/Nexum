@@ -1,0 +1,219 @@
+[1mdiff --git a/src/App.js b/src/App.js[m
+[1mindex 72df153..d4acf4b 100644[m
+[1m--- a/src/App.js[m
+[1m+++ b/src/App.js[m
+[36m@@ -1,10 +1,9 @@[m
+ import React from 'react'[m
+ import { AppContainer } from './components/AppContainer'[m
+[31m-import Register from './components/register/Register'[m
+ [m
+ function App() {[m
+ 	return ([m
+[31m-		<AppContainer />[m
+[32m+[m[32m        <AppContainer />[m
+ 	)[m
+ }[m
+ [m
+[1mdiff --git a/src/components/register/Register.js b/src/components/register/Register.js[m
+[1mdeleted file mode 100644[m
+[1mindex 6a68ac5..0000000[m
+[1m--- a/src/components/register/Register.js[m
+[1m+++ /dev/null[m
+[36m@@ -1,164 +0,0 @@[m
+[31m-import React from "react";[m
+[31m-import styled from "styled-components";[m
+[31m-[m
+[31m-const ContainerPageRegister = styled.div `[m
+[31m-    background-color: #FF9933;[m
+[31m-    height: 100vh;[m
+[31m-    display: flex;[m
+[31m-    align-items: center;[m
+[31m-    justify-content: center;[m
+[31m-`[m
+[31m-[m
+[31m-const ContainerRegister = styled.div `[m
+[31m-    background-color: ghostwhite;[m
+[31m-    border-radius: 50px;[m
+[31m-    display: flex;[m
+[31m-    flex-direction: column;[m
+[31m-    align-items: center;[m
+[31m-    width: 500px;[m
+[31m-    height: 440px;[m
+[31m-    box-shadow: 4px 4px 3px 3px #a25922;[m
+[31m-[m
+[31m-    button {[m
+[31m-        margin-top: 10px;[m
+[31m-    }[m
+[31m-`[m
+[31m-[m
+[31m-const ContainerForm = styled.div `[m
+[31m-    display: flex;[m
+[31m-    flex-direction: column;[m
+[31m-    align-items: center;[m
+[31m-    [m
+[31m-    input {[m
+[31m-        margin-top: 10px;[m
+[31m-    }[m
+[31m-[m
+[31m-`[m
+[31m-const Inputs = styled.input `[m
+[31m-    width: 266px;[m
+[31m-`[m
+[31m-[m
+[31m-const InputDate = styled.input `[m
+[31m-    width: 268px;[m
+[31m-`[m
+[31m-[m
+[31m-const LabelPagamentos = styled.label `[m
+[31m-    display: flex;[m
+[31m-    flex-direction: column;[m
+[31m-    margin-top: 10px;[m
+[31m-    margin-bottom: 10px;[m
+[31m-`[m
+[31m-[m
+[31m-class Register extends React.Component {[m
+[31m-    state = {[m
+[31m-        servico: "",[m
+[31m-        descricao: "",[m
+[31m-        prazo: "",[m
+[31m-        preco: "",[m
+[31m-        formasDePagamentos: [[m
+[31m-            {[m
+[31m-                id: "debito",[m
+[31m-                name: "Cartão de Débito"[m
+[31m-            },[m
+[31m-            {[m
+[31m-                id: "credito",[m
+[31m-                name: "Cartão de Crédito"[m
+[31m-            },[m
+[31m-            {[m
+[31m-                id: "paypal",[m
+[31m-                name: "PayPal"[m
+[31m-            },[m
+[31m-            {[m
+[31m-                id: "pix",[m
+[31m-                name: "Pix"[m
+[31m-            },[m
+[31m-            {[m
+[31m-                id: "boleto",[m
+[31m-                name: "Boleto"[m
+[31m-            },[m
+[31m-        ],[m
+[31m-        pagamentoSelecionado: [][m
+[31m-    }[m
+[31m-    [m
+[31m-    onChangeServico = (event) => {[m
+[31m-        this.setState({[m
+[31m-            servico: event.target.value[m
+[31m-        })[m
+[31m-    }[m
+[31m-    onChangeDescricao = (event) => {[m
+[31m-        this.setState({[m
+[31m-            descricao: event.target.value[m
+[31m-        })[m
+[31m-    }[m
+[31m-    onChangePrazo = (event) => {[m
+[31m-        this.setState({[m
+[31m-            prazo: event.target.value[m
+[31m-        })[m
+[31m-    }[m
+[31m-    onChangePreco = (event) => {[m
+[31m-        this.setState({[m
+[31m-            preco: event.target.value[m
+[31m-        })[m
+[31m-    }[m
+[31m-    onChangePagamento = (name) => {[m
+[31m-        let selected = this.state.pagamentoSelecionado[m
+[31m-        let find = selected.indexOf(name)[m
+[31m-[m
+[31m-        if(find > -1) {[m
+[31m-            selected.splice(find, 1)[m
+[31m-        } else {[m
+[31m-            selected.push(name)[m
+[31m-        }[m
+[31m-[m
+[31m-        this.setState({ selected })[m
+[31m-    }[m
+[31m-    [m
+[31m-[m
+[31m-    render() {[m
+[31m-[m
+[31m-        const checkBoxesPagamento = this.state.formasDePagamentos.map((pagamento) => {[m
+[31m-            return ([m
+[31m-                <label key={pagamento.id}>[m
+[31m-                    <input type="checkbox" [m
+[31m-                        onChange={() => this.onChangePagamento(pagamento.name)}[m
+[31m-                        selected={this.state.pagamentoSelecionado.includes(pagamento.name)}[m
+[31m-                    ></input>[m
+[31m-                    <span>{pagamento.name}</span>[m
+[31m-                </label>[m
+[31m-            )[m
+[31m-        })[m
+[31m-        return ([m
+[31m-            <ContainerPageRegister>[m
+[31m-                <ContainerRegister>[m
+[31m-                    <h2>Cadastre o seu serviço</h2>[m
+[31m-                    <ContainerForm>[m
+[31m-                        <label for="servico">[m
+[31m-                            <Inputs [m
+[31m-                            type="text" id="servico" name="servico" placeholder="Título" [m
+[31m-                            value={this.state.servico} onChange={this.onChangeServico}/>[m
+[31m-                        </label>[m
+[31m-                        <label for="descricao">[m
+[31m-                            <Inputs [m
+[31m-                            type="text" id="descricao" name="descricao" placeholder="Descrição" [m
+[31m-                            value={this.state.descricao} onChange={this.onChangeDescricao}/>[m
+[31m-                        </label>[m
+[31m-                        <label for="prazo">[m
+[31m-                            <InputDate type="date" id="prazo" name="prazo" [m
+[31m-                            value={this.state.prazo} onChange={this.onChangePrazo}/>[m
+[31m-                        </label>[m
+[31m-                        <label for="preco">[m
+[31m-                            <Inputs type="number" id="preco" name="preco" placeholder="Preço" min="0" [m
+[31m-                            value={this.state.preco} onChange={this.onChangePreco}/>[m
+[31m-                        </label>[m
+[31m-                        <LabelPagamentos>Formas de Pagamento:[m
+[31m-                            {checkBoxesPagamento}[m
+[31m-                        </LabelPagamentos>[m
+[31m-                    </ContainerForm>[m
+[31m-                    <button>Cadastrar Serviço</button>[m
+[31m-                </ContainerRegister>[m
+[31m-            </ContainerPageRegister>[m
+[31m-        )[m
+[31m-    }[m
+[31m-}[m
+[31m-[m
+[31m-export default Register[m
+\ No newline at end of file[m
+[1mdiff --git a/src/imgs/logo-alternativa.png b/src/imgs/logo-alternativa.png[m
+[1mdeleted file mode 100644[m
+[1mindex d5a8cf3..0000000[m
+Binary files a/src/imgs/logo-alternativa.png and /dev/null differ
+[1mdiff --git a/src/imgs/logo-caixa.png b/src/imgs/logo-caixa.png[m
+[1mdeleted file mode 100644[m
+[1mindex a3c51f3..0000000[m
+Binary files a/src/imgs/logo-caixa.png and /dev/null differ
+[1mdiff --git a/src/imgs/logo-caixabranca.png b/src/imgs/logo-caixabranca.png[m
+[1mdeleted file mode 100644[m
+[1mindex 4708b39..0000000[m
+Binary files a/src/imgs/logo-caixabranca.png and /dev/null differ
+[1mdiff --git a/src/imgs/logo-caixacontornada.png b/src/imgs/logo-caixacontornada.png[m
+[1mdeleted file mode 100644[m
+[1mindex bf4a60f..0000000[m
+Binary files a/src/imgs/logo-caixacontornada.png and /dev/null differ
+[1mdiff --git a/src/imgs/logo-caixapreta.png b/src/imgs/logo-caixapreta.png[m
+[1mdeleted file mode 100644[m
+[1mindex bfb7af3..0000000[m
+Binary files a/src/imgs/logo-caixapreta.png and /dev/null differ
+[1mdiff --git a/src/imgs/logo-principal.png b/src/imgs/logo-principal.png[m
+[1mdeleted file mode 100644[m
+[1mindex 7e2bd40..0000000[m
+Binary files a/src/imgs/logo-principal.png and /dev/null differ
+[1mdiff --git a/src/imgs/logo-titulobranco.png b/src/imgs/logo-titulobranco.png[m
+[1mdeleted file mode 100644[m
+[1mindex 4477c1c..0000000[m
+Binary files a/src/imgs/logo-titulobranco.png and /dev/null differ
+[1mdiff --git a/src/imgs/logo-titulopreto.png b/src/imgs/logo-titulopreto.png[m
+[1mdeleted file mode 100644[m
+[1mindex 80b1c37..0000000[m
+Binary files a/src/imgs/logo-titulopreto.png and /dev/null differ
